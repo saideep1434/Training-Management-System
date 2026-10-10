@@ -1,0 +1,135 @@
+<!-- <h2 mat-dialog-title>{{ isEditMode ? 'Edit Service Line' : 'Add New Service Line' }}</h2>
+
+<mat-dialog-content [formGroup]="serviceLineForm">
+    <mat-form-field appearance="outline">
+        <mat-label>Service Line ID</mat-label>
+        <input matInput formControlName="id" required>
+        <mat-error *ngIf="serviceLineForm.get('id')?.hasError('required') && serviceLineForm.get('id')?.touched">Service
+            Line ID is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Service Line Name</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error
+            *ngIf="serviceLineForm.get('name')?.hasError('required') && serviceLineForm.get('name')?.touched">Service
+            Line Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" [disabled]="serviceLineForm.invalid" (click)="onSave()">
+        {{ isEditMode ? 'Update' : 'Add' }} Service Line
+    </button>
+</mat-dialog-actions> -->
+<!-- 
+<div class="service-line-list-container">
+    <h3>Service Line Management</h3>
+
+    <div class="service-line-controls">
+        <mat-form-field appearance="outline" class="service-line-search-input">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="Search service lines" [(ngModel)]="searchQuery" (keyup)="applyFilters()">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" (click)="addServiceLine()">
+            <mat-icon>add</mat-icon> Add Service Line
+        </button>
+    </div>
+
+    <div class="data-table-section mat-elevation-z2">
+        <div class="found-count">Found: {{ dataSource.filteredData.length }} Service Lines</div>
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="sno">
+                <th mat-header-cell *matHeaderCellDef> S.No </th>
+                <td mat-cell *matCellDef="let element; let i = index;">
+                    {{ ((paginator?.pageIndex ?? 0) * (paginator?.pageSize ?? 0)) + i + 1 }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="trackName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="trackName"> Track Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.trackName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="domainName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="domainName"> Domain Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.domainName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="accent" (click)="onEditServiceLine(element)" title="Edit Service Line">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="onDeleteServiceLine(element)" title="Delete Service Line">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter
+                    "{{searchQuery}}"</td>
+            </tr>
+        </table>
+    </div>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons (page)="onPageChange($event)"></mat-paginator>
+</div> -->
+
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
+
+<div mat-dialog-content>
+  <form [formGroup]="serviceLineForm">
+    <!-- ServiceLine ID field (only visible and disabled in edit mode) -->
+    <mat-form-field appearance="outline" *ngIf="isEditMode">
+      <mat-label>Service Line ID</mat-label>
+      <input matInput formControlName="serviceLineId" readonly>
+      <mat-error *ngIf="serviceLineForm.get('serviceLineId')?.hasError('required') && serviceLineForm.get('serviceLineId')?.touched">
+        Service Line ID is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Track Name field -->
+    <mat-form-field appearance="outline">
+      <mat-label>Track Name</mat-label>
+      <input matInput formControlName="trackName" required>
+      <mat-error *ngIf="serviceLineForm.get('trackName')?.hasError('required') && serviceLineForm.get('trackName')?.touched">
+        Track Name is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Domain Name Dropdown -->
+    <mat-form-field appearance="outline">
+      <mat-label>Domain Name</mat-label>
+      <mat-select formControlName="domainName" required>
+        <!-- Use async pipe to unwrap the Observable and loop through domains -->
+        <mat-option *ngFor="let domain of (domains$ | async)" [value]="domain.domainName">
+          {{ domain.domainName }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="serviceLineForm.get('domainName')?.hasError('required') && serviceLineForm.get('domainName')?.touched">
+        Domain Name is required.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" [disabled]="serviceLineForm.invalid" (click)="onSave()">
+    {{ isEditMode ? 'Update' : 'Add' }} Service Line
+  </button>
+</mat-dialog-actions>

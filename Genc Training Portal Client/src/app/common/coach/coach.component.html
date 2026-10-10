@@ -1,0 +1,195 @@
+<!-- <div class="container my-5">
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-12 mb-4">
+            <app-card [title]="'Total Trainers'" [total]="'6'" [iconName]="'currency-dollar'" [percentageChange]=12
+                [statusText]="'active'"></app-card>
+        </div>
+        <div class="col-md-4 col-sm-6 col-12 mb-4">
+            <app-card [title]="'Total Assigned Trainers'" [total]="'6'" [iconName]="'currency-dollar'"></app-card>
+        </div>
+
+        <div class="col-md-4 col-sm-12 col-12 mb-4">
+            <app-card [title]="'Total Free Trainers'" [total]="'6'" [iconName]="'currency-dollar'"></app-card>
+        </div>
+    </div>
+</div> -->
+
+<div class="row m-b-20">
+    <div class="col-sm-4 col-lg-4">
+        <mat-card class="cardWithShadow p-20 text-center">
+            <div class="d-flex align-items-center justify-content-center m-b-10">
+                <!-- Increased font size with text-3xl class -->
+                <mat-icon color="primary" class="me-2 text-3xl">groups</mat-icon>
+                <h3 class="mat-headline-6 f-w-600 m-b-0">Total coaches</h3>
+            </div>
+            <span class="mat-display-1 f-w-700">21</span>
+        </mat-card>
+    </div>
+    <div class="col-sm-4 col-lg-4">
+        <mat-card class="cardWithShadow p-20 text-center">
+            <div class="d-flex align-items-center justify-content-center m-b-10">
+                <!-- Increased font size with text-3xl class -->
+                <mat-icon color="accent" class="me-2 text-3xl">event_available</mat-icon>
+                <h3 class="mat-headline-6 f-w-600 m-b-0">Available coaches</h3>
+            </div>
+            <span class="mat-display-1 f-w-700">18</span>
+        </mat-card>
+    </div>
+    <div class="col-sm-4 col-lg-4">
+        <mat-card class="cardWithShadow p-20 text-center">
+            <div class="d-flex align-items-center justify-content-center m-b-10">
+                <!-- Increased font size with text-3xl class -->
+                <mat-icon color="warn" class="me-2 text-3xl">event_busy</mat-icon>
+                <h3 class="mat-headline-6 f-w-600 m-b-0">Assigned coaches</h3>
+            </div>
+            <span class="mat-display-1 f-w-700">2</span>
+        </mat-card>
+    </div>
+</div>
+
+<mat-card class="cardWithShadow">
+    <mat-card-content>
+        <mat-card-header class="d-flex justify-content-between align-items-center mb-3">
+            <mat-card-title class="m-0">List of coaches</mat-card-title>
+            <div class="d-flex align-items-center">
+                <!-- Add Trainer Button -->
+                <div class="m-5">
+                    <button mat-flat-button color="primary" class="me-3 m-5" (click)="addCoach()">
+                        <mat-icon>add</mat-icon> Add Coach
+                    </button>
+                </div>
+
+                <!-- Search Input -->
+                <!-- Added w-48 class to reduce the width of the search input -->
+                <mat-form-field appearance="outline" class="small-search-input m-0 w-48">
+                    <mat-label>Search by Associate Id</mat-label>
+                    <input matInput [(ngModel)]="trainerSearchTerm" (input)="applyTrainerFilter()"
+                        placeholder="Search" />
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+        </mat-card-header>
+
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource1" class="w-100">
+                <ng-container matColumnDef="serialNumber">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14 p-l-0">
+                        S.No
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="p-l-0">
+                        <div class="m-l-16">
+                            <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                                {{ element.coachId }}
+                            </h6>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+                        Name
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="p-l-0">
+                        <div class="m-l-16">
+                            <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                                {{ element.coachName }}
+                            </h6>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="associateId">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+                        Associate Id
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="p-l-0">
+                        <div class="m-l-16">
+                            <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                                {{ element.coachAssociateId }}
+                            </h6>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="domain">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+                        Domain
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="p-l-0">
+                        <div class="m-l-16">
+                            <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                                {{ element.domain }}
+                            </h6>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+                        Email
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="p-l-0">
+                        <div class="m-l-16">
+                            <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                                {{ element.coachEmail }}
+                            </h6>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="cohorts">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+                        Cohorts
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="p-l-0">
+                        <div class="m-l-16">
+                            <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                                {{ element.cohorts }}
+                            </h6>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+              Status
+            </th>
+            <td mat-cell *matCellDef="let element">
+              @if(element.status == 'assigned') {
+              <span class="bg-light-warning text-error rounded f-w-600 p-6 p-y-4 f-s-12">
+                {{ element.status | titlecase }}
+              </span>
+              } @if(element.status == 'free') {
+              <span class="bg-light-success text-success rounded f-w-600 p-6 p-y-4 f-s-12">
+                {{ element.status | titlecase }}
+              </span>
+              }
+            </td>
+          </ng-container> -->
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14"></th>
+                    <td mat-cell *matCellDef="let element" class="mat-body-1">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Trainer actions menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>
+                                <mat-icon>edit</mat-icon>
+                                <span>Edit</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+            </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of technical trainers"></mat-paginator>
+    </mat-card-content>
+</mat-card>

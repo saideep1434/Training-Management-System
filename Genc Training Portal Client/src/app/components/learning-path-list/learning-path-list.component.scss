@@ -1,0 +1,40 @@
+:host {
+	display: block;
+}
+
+.learning-path-header h2 {
+	margin: 0;
+}
+
+.learning-path-grid {
+	gap: 16px;
+}
+
+.learning-path-card {
+	width: 320px;
+	border-radius: 10px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.learning-path-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+}
+
+mat-card-title {
+	font-weight: 600;
+}
+
+mat-card-subtitle {
+	color: #6b7280;
+}
+
+mat-card-content p {
+	margin: 0 0 6px 0;
+}
+
+mat-card-actions {
+	display: flex;
+	justify-content: flex-end;
+}

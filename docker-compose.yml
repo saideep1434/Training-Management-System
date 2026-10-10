@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: tms-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-tms_db}
+      MYSQL_USER: ${MYSQL_USER:-tmsuser}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-tmspassword}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - tms-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Spring Boot Backend
+  backend:
+    build:
+      context: ./Genc Training Portal Server
+      dockerfile: Dockerfile
+    container_name: tms-backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-tms_db}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:-tmsuser}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD:-tmspassword}
+      JWT_SECRET: ${JWT_SECRET:-yourVeryStrongAndSecureSecretKeyForJWTAuthenticationWhichShouldBeLongerThan256Bits}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
+      SPRING_MAIL_HOST: ${MAIL_HOST:-smtp.gmail.com}
+      SPRING_MAIL_PORT: ${MAIL_PORT:-587}
+      SPRING_MAIL_USERNAME: ${MAIL_USERNAME}
+      SPRING_MAIL_PASSWORD: ${MAIL_PASSWORD}
+      CORS_ALLOWED_ORIGINS: ${CORS_ORIGINS:-http://localhost:4200,http://localhost}
+    ports:
+      - "8083:8083"
+    networks:
+      - tms-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8083/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Angular Frontend
+  frontend:
+    build:
+      context: ./Genc Training Portal Client
+      dockerfile: Dockerfile
+    container_name: tms-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - tms-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  mysql-data:
+    driver: local
+
+networks:
+  tms-network:
+    driver: bridge

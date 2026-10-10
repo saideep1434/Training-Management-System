@@ -1,0 +1,53 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <!-- Guest Banner -->
+    <div *ngIf="isReadOnly" class="guest-notice mb-3">
+      <mat-icon>visibility</mat-icon>
+      <span>You are in <strong>read-only mode</strong>. You cannot create, edit, or delete cohorts.</span>
+    </div>
+
+    <!-- Non-Manager Role Banner (for authenticated users without cohort management permission) -->
+    <div *ngIf="!isReadOnly && !canManageCohorts" class="guest-notice mb-3">
+      <mat-icon>visibility</mat-icon>
+      <span>You have <strong>view-only access</strong> to cohorts. Only Admin and Academy Coordinator can create, edit, or delete cohorts.</span>
+    </div>
+
+    <div class="row align-items-center mb-3">
+      <div class="col-md-6 d-flex align-items-center gap-2">
+        <h4 class="mb-0">Cohorts</h4>
+        <span class="mat-caption text-muted" *ngIf="filteredCohorts?.length">• {{ filteredCohorts.length }} results</span>
+      </div>
+      <div class="col-md-6 text-end d-flex justify-content-end gap-2">
+        <mat-form-field appearance="outline" style="max-width: 340px; width: 100%;">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput #searchInput (input)="onSearchInputChange($event)" placeholder="Search cohorts (code, domain, trainer, location…)" aria-label="Search cohorts">
+          <button *ngIf="searchTerm" mat-icon-button matSuffix aria-label="Clear" (click)="searchInput.value=''; clearSearch()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <button *ngIf="!isReadOnly && canManageCohorts" mat-flat-button color="primary" (click)="addCohort()">
+          <mat-icon>add</mat-icon>
+          Add Cohort
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      @for (cohort of filteredCohorts; track cohort.cohortId) {
+        <div class="col-lg-4 col-md-6 mb-4">
+          <app-cohort-card
+            [cohort]="cohort"
+            (viewDetailsClicked)="viewDetails($event)"
+            (editClicked)="editCohort($event)"
+            (deleteClicked)="deleteCohort($event)"
+          ></app-cohort-card>
+        </div>
+      } @empty {
+        <div class="col-12 text-center py-5">
+          <mat-icon color="accent" style="font-size:60px; height:60px; width:60px;">inventory_2</mat-icon>
+          <p class="mat-body-1 m-t-10">No cohorts found. Try adjusting your search.</p>
+        </div>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,67 @@
+<div class="container-fluid p-4">
+  <div class="row">
+    <!-- Main Content -->
+    <div class="col-md-10">
+      <!-- Stats Cards -->
+      <div class="row mb-4">
+        <div class="col-md-3" *ngFor="let card of statsCards">
+          <div class="card shadow-sm text-center p-3 mb-3 hover-card">
+            <h5>{{ card.title }}</h5>
+            <h2>{{ card.value }}</h2>
+            <small class="text-muted">{{ card.subtitle }}</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="card shadow-sm p-3 mb-3">
+            <h5>Cohorts Based on Service Line</h5>
+            <canvas baseChart 
+              [data]="serviceLineData"
+              [type]="'bar'">
+            </canvas>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm p-3 mb-3 text-center">
+            <h5>Cohort’s Category</h5>
+            <div class="chart-wrapper">
+              <canvas baseChart 
+                [data]="categoryData"
+                [type]="'doughnut'">
+              </canvas>
+            </div>
+          </div>
+        </div>        
+      </div>
+
+      <!-- Total Cohorts Chart -->
+      <div class="row">
+        <div class="col">
+          <div class="card shadow-sm p-3">
+            <h5>Total Cohorts</h5>
+            <canvas baseChart 
+              [data]="totalCohortsData"
+              [type]="'line'">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar on the Right -->
+    <div class="col-md-2 mb-4">
+      <div class="card shadow-sm p-3 sticky-sidebar">
+        <h5>Pending Tasks</h5>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Task 1</li>
+          <li class="list-group-item">Task 2</li>
+          <li class="list-group-item">Task 3</li>
+          <li class="list-group-item">Task 4</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

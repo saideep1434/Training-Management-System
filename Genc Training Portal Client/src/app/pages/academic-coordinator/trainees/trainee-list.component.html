@@ -1,0 +1,67 @@
+<mat-card class="cardWithShadow m-b-20">
+  <mat-card-header>
+    <mat-card-title>Upload & Filter Trainees</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="filters d-flex gap-2 flex-wrap">
+      <mat-form-field appearance="outline">
+        <!-- <mat-label>Domain</mat-label> -->
+        <input matInput [(ngModel)]="domain" placeholder="e.g. Java" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <!-- <mat-label>Skills contains</mat-label> -->
+        <input matInput [(ngModel)]="skills" placeholder="e.g. Spring, Angular" />
+      </mat-form-field>
+      <mat-checkbox [(ngModel)]="unassignedOnly">Unassigned only</mat-checkbox>
+      <button mat-flat-button color="primary" (click)="applyFilters()">Apply</button>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardWithShadow">
+  <mat-card-header>
+    <mat-card-title>Eligible Trainees</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="trainees" class="w-100">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <input type="checkbox" [checked]="allSelected" (change)="toggleAll($event)" />
+        </th>
+        <td mat-cell *matCellDef="let t">
+          <input type="checkbox" [checked]="selected.has(t.traineeId)" (change)="toggle(t)" />
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let t">{{ t.traineeName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let t">{{ t.traineeEmail }}</td>
+      </ng-container>
+      <ng-container matColumnDef="domain">
+        <th mat-header-cell *matHeaderCellDef>Domain</th>
+        <td mat-cell *matCellDef="let t">{{ t.domainName || '—' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="skills">
+        <th mat-header-cell *matHeaderCellDef>Skills</th>
+        <td mat-cell *matCellDef="let t">{{ t.skills || '—' }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <div class="m-t-16 d-flex gap-2 align-items-center flex-wrap">
+      <mat-form-field appearance="outline">
+        <mat-label>Assign to Cohort</mat-label>
+        <mat-select [(ngModel)]="targetCohortId">
+          <mat-option *ngFor="let c of cohortOptions" [value]="c.value">{{ c.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-flat-button color="accent" (click)="assignSelected()" [disabled]="selected.size === 0 || !targetCohortId">
+        Assign Selected
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

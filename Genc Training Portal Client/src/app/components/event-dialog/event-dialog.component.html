@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>{{ isEditing ? 'Edit event' : 'Add event' }}</h2>
+
+<mat-dialog-content>
+  <h4 class="m-b-10">Existing events for {{ date }}</h4>
+  <div *ngIf="data.existingEvents && data.existingEvents.length > 0; else noEvents">
+    <mat-list>
+      <mat-list-item *ngFor="let event of data.existingEvents">
+        <div mat-line><strong>{{ getTypeLabel(event.type) }}</strong> — {{ event.startHour }}:00–{{ event.endHour }}:00</div>
+        <div mat-line>{{ event.description }}</div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <ng-template #noEvents>
+    <p class="text-muted">No events scheduled for this day.</p>
+  </ng-template>
+
+  <h4 class="m-t-10">{{ isEditing ? 'Event details' : 'Add new event' }}</h4>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Date</mat-label>
+    <input matInput type="date" [(ngModel)]="date" [readonly]="!data.canEdit && isEditing">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Event Type</mat-label>
+    <mat-select [(ngModel)]="eventType" [disabled]="!data.canEdit && isEditing">
+      <mat-option *ngFor="let type of eventTypes" [value]="type">{{ getTypeLabel(type) }}</mat-option>
+    </mat-select>
+    <mat-hint *ngIf="data.allowedTypes && data.allowedTypes.length === 0">You don't have permission to add events.</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Start Hour</mat-label>
+    <input matInput type="number" [(ngModel)]="startHour" min="0" max="24" [readonly]="!data.canEdit && isEditing" />
+    <mat-hint>Use 24-hour format</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>End Hour</mat-label>
+    <input matInput type="number" [(ngModel)]="endHour" min="0" max="24" [readonly]="!data.canEdit && isEditing" />
+    <mat-hint>End must be greater than start</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Description</mat-label>
+    <input matInput [(ngModel)]="description" [readonly]="!data.canEdit && isEditing" />
+    <mat-hint>What is this event about?</mat-hint>
+  </mat-form-field>
+
+  <!-- <div *ngIf="eventType === 'Trainer Connect'">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Topic Name</mat-label>
+      <mat-select [(ngModel)]="topicName" [disabled]="!data.canEdit && isEditing">
+        <mat-option *ngFor="let topic of topicOptions" [value]="topic">{{ topic }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width" *ngIf="topicName === 'Miscellaneous'">
+      <mat-label>Custom Topic Name</mat-label>
+      <input matInput [(ngModel)]="customTopicName" [readonly]="!data.canEdit && isEditing" />
+    </mat-form-field>
+  </div> -->
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSave()" [disabled]="!isFormValid()" *ngIf="data.canEdit || !isEditing">Save</button>
+</mat-dialog-actions>

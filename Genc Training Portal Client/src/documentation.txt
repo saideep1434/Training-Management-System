@@ -1,0 +1,6 @@
+login functionality and storing the details of the user logged in - auth.service.ts and storage.service.ts
+
+for login we use the associateAssociate repository
+
+Username: harikuchipudi1@gmail.com
+Temporary Password: 7e31af2b-5

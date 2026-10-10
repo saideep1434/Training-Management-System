@@ -1,0 +1,25 @@
+<!-- src/app/location-list/add-edit-location-dialog/add-edit-location-dialog.component.html -->
+
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Location' : 'Add New Location' }}</h2>
+
+<mat-dialog-content [formGroup]="locationForm">
+    <mat-form-field *ngIf="isEditMode" appearance="outline">
+        <mat-label>S.No</mat-label>
+        <input matInput formControlName="sno" type="number" readonly>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Location Name</mat-label>
+        <input matInput formControlName="locationName" required>
+        <mat-error
+            *ngIf="locationForm.get('locationName')?.hasError('required') && locationForm.get('locationName')?.touched">Location
+            Name is required</mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" [disabled]="locationForm.invalid" (click)="onSave()">
+        {{ isEditMode ? 'Update' : 'Add' }} Location
+    </button>
+</mat-dialog-actions>

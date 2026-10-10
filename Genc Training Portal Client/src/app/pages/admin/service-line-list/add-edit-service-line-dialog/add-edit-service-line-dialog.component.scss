@@ -1,0 +1,39 @@
+ mat-dialog-content {
+     display: flex;
+     flex-direction: column;
+     gap: 15px;
+     /* Space between form fields */
+     padding: 20px;
+     font-family: "Inter", sans-serif;
+     /* Consistent font */
+ }
+
+ mat-form-field {
+     width: 100%;
+     /* Make form fields take full width */
+ }
+
+ mat-dialog-actions {
+     padding: 15px 20px;
+     border-top: 1px solid #eee;
+     display: flex;
+     justify-content: flex-end;
+     gap: 10px;
+ }
+
+ button {
+     min-width: 80px;
+     /* Ensure buttons have a consistent minimum width */
+ }
+
+ /* Style for the dialog title */
+ h2.mat-dialog-title {
+     padding: 20px;
+     border-bottom: 1px solid #eee;
+     margin-bottom: 0;
+     /* Remove default margin */
+     font-family: "Inter", sans-serif;
+     font-weight: 600;
+     color: #3f51b5;
+     /* Match primary color */
+ }

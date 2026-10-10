@@ -1,0 +1,23 @@
+<div class="calendar">
+  <div class="header">
+    <button (click)="prevMonth()">&#10094;</button>
+    <div>{{ viewDate | date:'MMMM yyyy' }}</div>
+    <button (click)="nextMonth()">&#10095;</button>
+  </div>
+
+  <div class="weekdays">
+    <div *ngFor="let day of weekdays">{{ day }}</div>
+  </div>
+
+  <div class="days-grid">
+    <div *ngFor="let day of days"
+         class="day"
+         [class.not-current]="!day.isCurrentMonth"
+         [class.today]="isToday(day.date)"
+         [class.selected]="isSelected(day.date)"
+         (click)="selectDate(day)"
+         >
+      {{ day.date.getDate() }}
+    </div>
+  </div>
+</div>

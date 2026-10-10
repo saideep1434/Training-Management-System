@@ -1,0 +1,73 @@
+@use "@angular/material" as mat;
+@include mat.core();
+
+@import "variables";
+@import "helpers/color";
+@import "helpers/icon-size";
+
+//Theme colors
+
+@import "themecolors/default_theme";
+@include mat.all-component-themes($bluetheme);
+
+// CSS variables for runtime theming and better interoperability
+:root {
+  --background: #{$background};
+  --surface: #{$cardbg};
+  --toolbar: #{$toolbar};
+  --text-primary: #{$textPrimary};
+  --text-secondary: #{$textSecondary};
+  --border-color: #{$borderColor};
+  --hover-bg: #{$hoverBgColor};
+  --primary: #{$primary};
+  --accent: #{$accent};
+  --success: #{$success};
+  --warning: #{$warning};
+  --error: #{$error};
+  --radius-sm: #{$radius-sm};
+  --radius: #{$border-radius};
+  --radius-lg: #{$radius-lg};
+  --shadow-xs: #{$shadow-xs};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+}
+
+.dark-theme {
+  --background: #{$darkbackground};
+  --surface: #{$darkcardbg};
+  --toolbar: #{$darktoolbar};
+  --text-primary: #{$white};
+  --text-secondary: #{$muted};
+  --border-color: #{$darkborderColor};
+  --hover-bg: #{$darkhoverbgcolor};
+}
+
+// Global improvements
+html, body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  outline-color: var(--primary);
+}
+
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+//container layout
+@import "overrides/materialoverrides";
+@import "container";
+@import "layouts/layouts";
+@import "grid/grid";
+@import "helpers/custom-flex";
+@import "helpers/index";
+
+
+// pages
+@import "pages/dashboards";
+@import "pages/auth";

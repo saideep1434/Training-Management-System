@@ -1,0 +1,56 @@
+// for radius
+
+  .mdc-text-field--outlined {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__trailing,
+    .mdc-notched-outline__notch {
+      border-color: $borderColor;
+    }
+
+    .mdc-notched-outline .mdc-notched-outline__leading {
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+    }
+
+    .mdc-notched-outline .mdc-notched-outline__trailing {
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+  }
+
+  .mdc-form-field > label {
+    font-size: 14px;
+  }
+
+  // set fix height to input
+
+  // .mat-mdc-form-field {
+  //   height: 44px;
+  //   .mat-mdc-form-field-flex {
+  //     height: 44px;
+  //     align-items: center;
+  //   }
+  // }
+
+  .hide-hint {
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+
+// Compact appearance and subtle focus styling
+.mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline {
+  border-radius: $radius-md;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__notch {
+  border-color: $primary !important;
+  box-shadow: 0 0 0 3px rgba(93, 135, 255, 0.15);
+}
+
+.mat-mdc-input-element::placeholder {
+  color: $muted;
+  opacity: 1;
+}

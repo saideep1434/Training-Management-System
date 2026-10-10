@@ -1,0 +1,15 @@
+export const ROLES = {
+    SKILLING_LEAD: 'ROLE_SKILLING_LEAD',
+    ACADEMY_COORDINATOR: 'ROLE_ACADEMY_COORDINATOR',
+    TECHNICAL_TRAINER: 'ROLE_TECHNICAL_TRAINER',
+    COACH: 'ROLE_COACH',
+    BH_TRAINER: 'ROLE_BH_TRAINER',
+    MENTOR: 'ROLE_MENTOR',
+    CR: 'ROLE_CR',
+    ADMIN: 'ROLE_ADMIN',
+    GUEST: 'ROLE_GUEST',
+};
+
+export type RoleType = keyof typeof ROLES;
+
+export type RoleValue = typeof ROLES[keyof typeof ROLES];

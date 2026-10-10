@@ -1,0 +1,23 @@
+<mat-card class="cardWithShadow">
+    <mat-card-content class="p-24">
+        <div *ngIf="dataNotice" class="data-notice">{{ dataNotice }}</div>
+        <div class="d-flex w-100">
+            <mat-card-title>TRAINEES BASED ON LOCATION</mat-card-title>
+            <div class="m-l-auto">
+                <mat-form-field class="theme-select" appearance="outline">
+                    <mat-select value="oct">
+                        @for(month of months; track month.viewValue ) {
+                        <mat-option [value]="month.value">
+                            {{ month.viewValue }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <apx-chart [series]="salesOverviewChart.series" [dataLabels]="salesOverviewChart.dataLabels"
+            [chart]="salesOverviewChart.chart" [legend]="salesOverviewChart.legend" [xaxis]="salesOverviewChart.xaxis"
+            [yaxis]="salesOverviewChart.yaxis" [grid]="salesOverviewChart.grid" [stroke]="salesOverviewChart.stroke"
+            [tooltip]="salesOverviewChart.tooltip" [plotOptions]="salesOverviewChart.plotOptions"></apx-chart>
+    </mat-card-content>
+</mat-card>

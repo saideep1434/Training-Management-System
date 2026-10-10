@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap");
+
+// font
+$font-family: 'Plus Jakarta Sans', sans-serif;
+
+// light color variable
+$sidebarbg: white;
+$background: white;
+$cardbg: white;
+$toolbar: white;
+$cardshadow: rgb(145 158 171 / 30%) 0px 1px 2px, rgb(145 158 171 / 18%) 0px 8px 24px -6px;
+// shadow scale
+$shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.06);
+$shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.1), 0 1px 2px rgba(16, 24, 40, 0.06);
+$shadow-md: 0 4px 6px rgba(16, 24, 40, 0.08), 0 2px 4px rgba(16, 24, 40, 0.06);
+$shadow-lg: 0 12px 16px rgba(16, 24, 40, 0.12), 0 4px 6px rgba(16, 24, 40, 0.06);
+$hoverBgColor: #f6f9fc;
+
+// Dark color variable
+$darksidebarbg: #2a3447;
+$darkbackground: #2a3447;
+$darkcardbg: #2a3447;
+$darktoolbar: #2a3447;
+$darkcardshadow: rgba(145, 158, 171, 0.3) 0px 0px 2px 0px, rgba(145, 158, 171, 0.02) 0px 12px 24px -4px;
+$darkborderColor: #333f55;
+$darkformborderColor: #465670;
+$darkhoverbgcolor: #333f55;
+$darkthemelightprimary: #253662;
+$darkthemelightaccent: #1C455D;
+$darkthemelightwarning: #4D3A2A;
+$darkthemelighterror: #4B313D;
+$darkthemelightsuccess: #1B3C48;
+
+// Sidenav
+$sidenav-desktop: 270px !default;
+$sidenav-mini: 80px !default;
+$header-height: 70px !default;
+
+
+//BorderColor
+$borderColor: #e5eaef;
+$borderformColor: #dfe5ef;
+$dividerColor: #e6e8ec;
+
+// custom
+$primary: #5d87ff;
+$accent: #49beff;
+$warning: #ffae1f;
+$error: #fa896b;
+$success: #13deb9;
+$white: #ffffff;
+
+$light: #f2f6fa;
+$muted: #98a2b3;
+$gray-100:  #7c8fac;
+
+$light-primary: #ecf2ff;
+$light-accent: #e8f7ff;
+$light-warning: #fef5e5;
+$light-error: #fdede8;
+$light-success: #e6fffa;
+
+// layout
+$boxedWidth: 1200px;
+
+$border-radius: 10px;
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+
+// text color
+$textPrimary: #1f2937;
+$textSecondary: #475467;

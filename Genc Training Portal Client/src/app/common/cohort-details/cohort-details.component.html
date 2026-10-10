@@ -1,0 +1,350 @@
+<div class="cohort-details-container">
+
+  <!-- Top Loading Indicator -->
+  <mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
+
+  <ng-container *ngIf="cohort; else loadingOrEmpty">
+
+  <!-- Hero Header -->
+  <mat-card class="hero-card cardWithShadow m-b-20">
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="cohort-title">
+          <mat-icon color="primary">groups</mat-icon>
+          <h2>{{ cohort.cohortCode }}</h2>
+        </div>
+        <div class="meta-row">
+          <mat-chip-set>
+            <mat-chip appearance="outlined" selected color="primary">
+              <mat-icon class="m-r-5">domain</mat-icon>{{ cohort.domainName || '—' }}
+            </mat-chip>
+            <mat-chip appearance="outlined">
+              <mat-icon class="m-r-5">location_on</mat-icon>{{ cohort.location || '—' }}
+            </mat-chip>
+            <mat-chip appearance="outlined">
+              <mat-icon class="m-r-5">badge</mat-icon>{{ cohort.hireType || '—' }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+        <div class="period-row">
+          <mat-icon color="accent" class="m-r-5">calendar_month</mat-icon>
+          <span>Training: {{ cohort.trainingStartDate | date }} — {{ cohort.trainingEndDate | date }}</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="people-grid">
+          <div *ngIf="cohort.technicalTrainer" class="person">
+            <div class="avatar">
+              <div class="avatar-circle">{{ (cohort.technicalTrainer?.techTrainerName || '?') | slice:0:1 }}</div>
+              <span>{{ cohort.technicalTrainer?.techTrainerName }}</span>
+            </div>
+            <small>Technical Trainer</small>
+          </div>
+          <div *ngIf="cohort.coach" class="person">
+            <div class="avatar">
+              <div class="avatar-circle">{{ (cohort.coach?.coachName || '?') | slice:0:1 }}</div>
+              <span>{{ cohort.coach?.coachName }}</span>
+            </div>
+            <small>Coach</small>
+          </div>
+          <div *ngIf="cohort.mentor" class="person">
+            <div class="avatar">
+              <div class="avatar-circle">{{ (cohort.mentor?.mentorName || '?') | slice:0:1 }}</div>
+              <span>{{ cohort.mentor?.mentorName }}</span>
+            </div>
+            <small>Mentor</small>
+          </div>
+          <div *ngIf="cohort.bhTrainer" class="person">
+            <div class="avatar">
+              <div class="avatar-circle">{{ (cohort.bhTrainer?.bhTrainerName || '?') | slice:0:1 }}</div>
+              <span>{{ cohort.bhTrainer?.bhTrainerName }}</span>
+            </div>
+            <small>BH Trainer</small>
+          </div>
+        </div>
+        <div class="lp-row" *ngIf="cohort.learningPathId">
+          <mat-chip appearance="outlined">
+            <mat-icon class="m-r-5">route</mat-icon>Learning Path #{{ cohort.learningPathId }}
+          </mat-chip>
+        </div>
+        <div class="m-t-10" *ngIf="isAdmin">
+          <button mat-stroked-button color="primary" (click)="openEditStaffDialog()">
+            <mat-icon class="m-r-5">manage_accounts</mat-icon>
+            Edit Staff
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- KPI Cards -->
+  <div class="kpi-row m-b-20">
+    <mat-card class="kpi-card">
+      <div class="kpi">
+        <div class="kpi-icon" aria-hidden="true"><mat-icon color="primary">schedule</mat-icon></div>
+        <div class="kpi-content">
+          <div class="kpi-value">{{ daysRemaining }}</div>
+          <div class="kpi-label">Days remaining</div>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="kpi-card">
+      <div class="kpi">
+        <div class="kpi-icon" aria-hidden="true"><mat-icon color="primary">event</mat-icon></div>
+        <div class="kpi-content">
+          <div class="kpi-value">{{ totalEvents }}</div>
+          <div class="kpi-label">Total events</div>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="kpi-card">
+      <div class="kpi">
+        <div class="kpi-icon" aria-hidden="true"><mat-icon color="primary">timelapse</mat-icon></div>
+        <div class="kpi-content">
+          <div class="kpi-value">{{ durationDays }}</div>
+          <div class="kpi-label">Duration days</div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Cohort Summary (simplified) -->
+  <div class="details-card m-b-20">
+    <mat-card class="cardWithShadow theme-card">
+      <mat-card-header>
+        <mat-card-title>Summary</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="details-grid">
+          <div class="detail-item"><mat-icon>tag</mat-icon><span class="label">Cohort Code</span><span class="value">{{ cohort.cohortCode }}</span></div>
+          <div class="detail-item"><mat-icon>domain</mat-icon><span class="label">Domain</span><span class="value">{{ cohort.domainName || '—' }}</span></div>
+          <div class="detail-item"><mat-icon>location_on</mat-icon><span class="label">Location</span><span class="value">{{ cohort.location || '—' }}</span></div>
+          <div class="detail-item"><mat-icon>calendar_month</mat-icon><span class="label">Training</span><span class="value">{{ cohort.trainingStartDate | date }} — {{ cohort.trainingEndDate | date }}</span></div>
+          <div class="detail-item" *ngIf="cohort.technicalTrainer"><mat-icon>school</mat-icon><span class="label">Technical Trainer</span><span class="value">{{ cohort.technicalTrainer?.techTrainerName }}</span></div>
+          <div class="detail-item" *ngIf="cohort.coach"><mat-icon>sports_kabaddi</mat-icon><span class="label">Coach</span><span class="value">{{ cohort.coach?.coachName }}</span></div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Tab Navigation -->
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="cohort-tabs">
+    <mat-tab label="Calendar"></mat-tab>
+    <mat-tab label="Timeline"></mat-tab>
+    <mat-tab label="Trainees"></mat-tab>
+    <mat-tab label="Pending Tasks"></mat-tab>
+    <mat-tab *ngIf="isTechnicalTrainer" label="Additional Projects"></mat-tab>
+  </mat-tab-group>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <ng-container [ngSwitch]="selectedTabIndex">
+
+  <!-- Calendar Tab -->
+      <div *ngSwitchCase="0" class="calendar-events-container">
+        <div class="calendar-section">
+          <app-calendar
+            [startDate]="cohort.trainingStartDate"
+            [endDate]="cohort.trainingEndDate"
+            [events]="cohortEvents"
+            (dayClicked)="onDayClicked($event)"
+            (eventAdded)="onEventAdded($event)"
+            >
+          </app-calendar>
+
+        </div>
+
+        <div class="events-section">
+          <mat-card class="cardWithShadow theme-card">
+            <mat-card-header class="events-header">
+              <div class="title-row">
+                <mat-card-title>Events</mat-card-title>
+              </div>
+              <div class="actions-row">
+                <span class="count" *ngIf="cohortEvents?.length">{{ cohortEvents.length }} total</span>
+                <button mat-raised-button color="primary" (click)="openAddEventDialog()" [disabled]="allowedEventTypes.length === 0" matTooltip="You are not allowed to add events" [matTooltipDisabled]="allowedEventTypes.length > 0">
+                  <mat-icon class="m-r-5">add</mat-icon>
+                  Add Event
+                </button>
+              </div>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <div class="filters p-20">
+              <!-- Type filter chips -->
+              <div class="type-filters m-b-10">
+                <mat-chip-set>
+                  <mat-chip
+                    *ngFor="let t of allTypes"
+                    [class.chip-selected]="selectedTypeFilters.size === 0 || selectedTypeFilters.has(t)"
+                    (click)="toggleTypeFilter(t)"
+                    [ngClass]="getTypeClass(t)"
+                    appearance="outlined"
+                  >
+                    {{ getTypeLabel(t) }}
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
+
+              <mat-form-field appearance="outline" class="anchor-date">
+                <!-- <mat-label>Anchor date</mat-label> -->
+                <input matInput [matDatepicker]="picker" (dateChange)="onAnchorDateChange($event.value)" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-button-toggle-group [value]="direction" (change)="onDirectionChange($event.value)" name="direction" aria-label="Direction">
+                <mat-button-toggle value="past">Past</mat-button-toggle>
+                <mat-button-toggle value="future">Future</mat-button-toggle>
+              </mat-button-toggle-group>
+
+              <mat-form-field appearance="outline" style="width:120px;">
+                <mat-label>Page size</mat-label>
+                <mat-select [value]="pageSize" (selectionChange)="onPageSizeChange($event.value)">
+                  <mat-option [value]="5">5</mat-option>
+                  <mat-option [value]="10">10</mat-option>
+                  <mat-option [value]="20">20</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <span class="results-range" style="margin-left:auto;">
+                {{ pageStart }} - {{ pageEnd }} of {{ totalItems }}
+              </span>
+
+              <div>
+                <button class="m-r-10" mat-stroked-button color="primary" (click)="jumpToNextEvent()" [disabled]="!getNextUpcomingEvent()">Next event</button>
+                <button mat-stroked-button (click)="prevPage()" [disabled]="pageIndex === 0">Previous</button>
+                <button class="m-l-10" mat-stroked-button (click)="nextPage()" [disabled]="(pageIndex + 1) * pageSize >= totalItems">Next</button>
+              </div>
+            </div>
+
+            <ng-container *ngIf="cohortEvents && cohortEvents.length; else noEvents">
+              <div *ngFor="let group of groupedPagedEvents" class="event-group">
+                <div class="p-20">
+                  <div class="event-group-header">
+                    <mat-icon class="m-r-5" color="accent">calendar_today</mat-icon>
+                    <strong>{{ group.date }}</strong>
+                    <span class="m-l-10" *ngIf="group.events.length">({{ group.events.length }})</span>
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+                <mat-list>
+                  <ng-container *ngFor="let event of group.events">
+                  <mat-list-item *ngIf="isTypeSelected(event.type)" (click)="openEventDetails(event)" class="event-item">
+                    <div mat-line class="event-title">
+                      <!-- <span class="event-type">{{ getTypeLabel(event.type) }}</span> -->
+                      <mat-chip-set class="m-l-10">
+                        <mat-chip appearance="outlined" [ngClass]="getTypeClass(event.type)">{{ getTypeLabel(event.type) }}</mat-chip>
+                        <mat-chip appearance="outlined" color="primary" selected>
+                          {{ event.startHour }}:00 - {{ event.endHour }}:00
+                        </mat-chip>
+                      </mat-chip-set>
+                    </div>
+                    <!-- <div mat-line class="event-desc">{{ event.description }}</div> -->
+                    <!-- <div mat-line class="event-meta" *ngIf="event.eventCreatorAssociateId">
+                      <mat-icon class="m-r-5" fontIcon="badge"></mat-icon>
+                      <small>Created by: {{ event.eventCreatorAssociateId }}</small>
+                    </div> -->
+                  </mat-list-item>
+                  </ng-container>
+                </mat-list>
+                <mat-divider></mat-divider>
+              </div>
+            </ng-container>
+
+            <ng-template #noEvents>
+              <div class="empty-state p-20 text-center">
+                <mat-icon color="accent" style="font-size: 48px; height: 48px; width: 48px;">event_busy</mat-icon>
+                <p class="m-t-10 m-b-10">No events yet for this cohort.</p>
+                <button mat-stroked-button color="primary" (click)="openAddEventDialog()" [disabled]="allowedEventTypes.length === 0" matTooltip="You are not allowed to add events" [matTooltipDisabled]="allowedEventTypes.length > 0">
+                  <mat-icon class="m-r-5">add</mat-icon>
+                  Create your first event
+                </button>
+              </div>
+            </ng-template>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Timeline Tab -->
+      <div *ngSwitchCase="1">
+        <mat-card class="cardWithShadow theme-card">
+          <mat-card-header>
+            <mat-card-title>Training Timeline</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <ng-container *ngIf="timeline && timeline.length; else noTimeline">
+              <mat-list>
+                <mat-list-item *ngFor="let day of timeline" class="event-item">
+                  <mat-icon matListItemIcon color="accent">flag</mat-icon>
+                  <div mat-line class="event-title">
+                    <strong>Day {{ day.dayNumber }}</strong>
+                    <mat-chip-set class="m-l-10">
+                      <mat-chip appearance="outlined" color="primary" selected>{{ day.date }}</mat-chip>
+                      <mat-chip appearance="outlined">{{ day.topic }}</mat-chip>
+                    </mat-chip-set>
+                  </div>
+                  <div mat-line class="event-desc">{{ day.description }}</div>
+                  <div *ngIf="day.events?.length" class="m-t-10">
+                    <div style="font-size:12px; color: rgba(0,0,0,0.6);" class="m-b-10">Events</div>
+                    <mat-list>
+                      <mat-list-item *ngFor="let ev of day.events" class="event-item">
+                        <mat-icon matListItemIcon color="primary">{{ getTypeIcon(ev.type) }}</mat-icon>
+                        <div mat-line class="event-title">
+                          <mat-chip-set class="m-l-10">
+                            <mat-chip appearance="outlined" [ngClass]="getTypeClass(ev.type)">{{ getTypeLabel(ev.type) }}</mat-chip>
+                            <mat-chip appearance="outlined" color="primary" selected>
+                              {{ ev.startHour }}:00 - {{ ev.endHour }}:00
+                            </mat-chip>
+                          </mat-chip-set>
+                        </div>
+                        <div mat-line class="event-desc">{{ ev.description }}</div>
+                      </mat-list-item>
+                    </mat-list>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </ng-container>
+            <ng-template #noTimeline>
+              <div class="empty-state p-20 text-center">
+                <mat-icon color="accent" style="font-size: 48px; height: 48px; width: 48px;">hourglass_empty</mat-icon>
+                <p class="m-t-10 m-b-10">Timeline is not available. Ensure a learning path is assigned and events are loaded.</p>
+              </div>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Trainees Tab -->
+      <div *ngSwitchCase="2">
+        <p>Trainees information will be shown here.</p>
+      </div>
+
+      <!-- Pending Tasks Tab -->
+      <div *ngSwitchCase="3">
+        <p>Pending tasks will be shown here.</p>
+      </div>
+
+      <!-- Additional Projects Tab -->
+      <ng-container *ngIf="isTechnicalTrainer">
+        <div *ngSwitchCase="4">
+          <p>Additional Projects content here.</p>
+        </div>
+      </ng-container>
+
+    </ng-container>
+  </div>
+
+  <div class="text-center m-t-20">
+    <button mat-flat-button color="primary" (click)="goBack()">Back to Cohorts</button>
+  </div>
+
+  </ng-container>
+
+  <ng-template #loadingOrEmpty>
+    <div class="empty-state p-20 text-center">
+      <mat-icon color="accent" class="empty-icon">search</mat-icon>
+      <p class="m-t-10 m-b-10">{{ isLoading ? 'Loading cohort details…' : 'Cohort not found.' }}</p>
+    </div>
+  </ng-template>
+
+</div>

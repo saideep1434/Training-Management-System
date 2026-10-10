@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{ data ? 'Edit Person' : 'Add New Person' }}</h2>
+
+<mat-dialog-content [formGroup]="personForm">
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Associate Name</mat-label>
+        <input matInput formControlName="associateName">
+        <mat-error *ngIf="personForm.get('associateName')?.hasError('required')">Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Associate ID</mat-label>
+        <input matInput formControlName="associateId" [readonly]="!!data">
+        <mat-error *ngIf="personForm.get('associateId')?.hasError('required')">ID is required</mat-error>
+        <mat-error *ngIf="personForm.get('associateId')?.hasError('pattern')">ID must be numeric</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Associate Email</mat-label>
+        <input matInput formControlName="associateEmail">
+        <mat-error *ngIf="personForm.get('associateEmail')?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="personForm.get('associateEmail')?.hasError('email')">Enter a valid email</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+            <mat-option *ngFor="let role of rolesList" [value]="role">{{ role }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="personForm.get('role')?.hasError('required')">Role is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width" *ngIf="showAdditionalInput">
+        <mat-label>Technical Expertise (e.g., Java, Python)</mat-label>
+        <input matInput formControlName="description">
+        <mat-error *ngIf="personForm.get('description')?.hasError('required') && showAdditionalInput">
+            Technical Expertise is required for Technical Trainers
+        </mat-error>
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="onSave()" [disabled]="!personForm.valid">Save</button>
+</mat-dialog-actions>

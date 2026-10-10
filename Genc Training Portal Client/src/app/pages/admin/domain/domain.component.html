@@ -1,0 +1,129 @@
+<!-- src/app/domain/domain.component.html
+
+<div class="domain-list-container">
+    <h3>Domain Management</h3>
+
+    <div class="domain-controls">
+        <mat-form-field appearance="outline" class="domain-search-input">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="Search domains" [(ngModel)]="searchQuery" (keyup)="applyFilters()">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" (click)="addDomain()">
+            <mat-icon>add</mat-icon> Add Domain
+        </button>
+    </div>
+
+    <div class="data-table-section mat-elevation-z2">
+        <div class="found-count">Found: {{ dataSource.filteredData.length }} Domains</div>
+        <table mat-table [dataSource]="dataSource" matSort>
+
+
+            <ng-container matColumnDef="serialNo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No </th>
+                <td mat-cell *matCellDef="let element"> {{element.serialNo}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="domainId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Domain ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.domainId}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="domainName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Domain Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.domainName}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let element">
+
+                    <button mat-icon-button color="primary" (click)="onManageServiceLines(element)"
+                        title="Manage Service Lines">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                    <button mat-icon-button color="accent" (click)="onEditDomain(element)" title="Edit Domain">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="onDeleteDomain(element)" title="Delete Domain">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter
+                    "{{searchQuery}}"</td>
+            </tr>
+        </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons (page)="onPageChange($event)"></mat-paginator>
+</div> -->
+
+<div class="vertical-list-container">
+    <h3>Domain Management</h3>
+
+    <!-- Guest Banner -->
+    <div *ngIf="isReadOnly" class="guest-notice mb-3">
+        <mat-icon>visibility</mat-icon>
+        <span>You are in <strong>read-only mode</strong>. You cannot add, edit, or delete domains.</span>
+    </div>
+
+    <div class="vertical-controls">
+        <mat-form-field appearance="outline" class="vertical-search-input">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="Search domains" [(ngModel)]="searchQuery" (keyup)="applyFilters()">
+        </mat-form-field>
+
+        <button *ngIf="!isReadOnly" mat-flat-button color="primary" (click)="addDomain()">
+            <mat-icon>add</mat-icon> Add Domain
+        </button>
+    </div>
+
+    <div class="data-table-section mat-elevation-z2">
+        <div class="found-count">Found: {{ dataSource.filteredData.length }} Domains</div>
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="serialNo">
+                <th mat-header-cell *matHeaderCellDef> S.No </th>
+                <td mat-cell *matCellDef="let element; let i = index;">
+                    {{ ((paginator?.pageIndex ?? 0) * (paginator?.pageSize ?? 0)) + i + 1 }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="domainName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="domainName"> Domain Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.domainName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let element">
+                    <button *ngIf="!isReadOnly" mat-icon-button color="accent" (click)="onEditDomain(element)" title="Edit Domain">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button *ngIf="!isReadOnly" mat-icon-button color="warn" (click)="onDeleteDomain(element)" title="Delete Domain">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <span *ngIf="isReadOnly" class="text-muted">View only</span>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter
+                    "{{searchQuery}}"</td>
+            </tr>
+        </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons (page)="onPageChange($event)"></mat-paginator>
+</div>

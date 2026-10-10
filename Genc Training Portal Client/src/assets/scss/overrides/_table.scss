@@ -1,0 +1,17 @@
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+  padding: 16px;
+}
+
+.mdc-data-table__cell, .mdc-data-table__header-cell {
+    border-bottom-color: $dividerColor;
+}
+
+.mdc-data-table__header-cell {
+  font-weight: 600;
+  color: $textSecondary;
+}
+
+.mat-mdc-paginator {
+  border-top: 1px solid $dividerColor;
+}

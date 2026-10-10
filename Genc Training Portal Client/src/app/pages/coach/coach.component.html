@@ -1,0 +1,59 @@
+<div class="coach-dashboard p-3">
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<h2 class="m-0">Coach Dashboard</h2>
+	</div>
+
+	<div *ngIf="loading" class="text-center p-4">
+		<mat-icon>hourglass_top</mat-icon>
+		Loading your data...
+	</div>
+
+	<div *ngIf="!loading">
+		<!-- KPIs -->
+		<div class="kpi-row d-flex flex-wrap gap-3 mb-4">
+			<mat-card class="kpi-card">
+				<mat-card-content>
+					<div class="kpi-title">Assigned Cohorts</div>
+					<div class="kpi-value">{{ totalAssigned }}</div>
+				</mat-card-content>
+			</mat-card>
+
+			<mat-card class="kpi-card">
+				<mat-card-content>
+					<div class="kpi-title">Active Now</div>
+					<div class="kpi-value">{{ activeNow }}</div>
+				</mat-card-content>
+			</mat-card>
+
+			<mat-card class="kpi-card">
+				<mat-card-content>
+					<div class="kpi-title">Locations</div>
+					<div class="kpi-value">{{ uniqueLocationsCount }}</div>
+				</mat-card-content>
+			</mat-card>
+		</div>
+
+		<!-- Assigned Cohorts List -->
+		<div class="cohorts-list d-flex flex-wrap gap-3">
+			<mat-card *ngFor="let c of cohorts" class="cohort-card">
+				<mat-card-header>
+					<mat-card-title>{{ c.cohortCode }}</mat-card-title>
+					<mat-card-subtitle>{{ c.domainName }} • {{ c.location }}</mat-card-subtitle>
+				</mat-card-header>
+				<mat-card-content>
+					<div class="row small text-muted">
+						<div class="col">Start: {{ c.trainingStartDate | date }}</div>
+						<div class="col">End: {{ c.trainingEndDate | date }}</div>
+					</div>
+				</mat-card-content>
+				<mat-card-actions align="end">
+					<a mat-button [routerLink]="['/coach/cohort-list/cohort', c.cohortId]">View Details</a>
+				</mat-card-actions>
+			</mat-card>
+		</div>
+
+		<div *ngIf="cohorts.length === 0" class="text-muted p-3">
+			No cohorts assigned to you yet.
+		</div>
+	</div>
+</div>

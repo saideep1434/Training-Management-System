@@ -1,0 +1,42 @@
+
+
+<h2 mat-dialog-title>{{ dialogTitle }}</h2> <div mat-dialog-content>
+    <form [formGroup]="verticalForm">
+      <mat-form-field appearance="outline" *ngIf="isEditMode">
+        <mat-label>Vertical ID</mat-label>
+        <input matInput formControlName="verticalId" readonly>
+        <mat-error *ngIf="verticalForm.get('verticalId')?.hasError('required') && verticalForm.get('verticalId')?.touched">
+          Vertical ID is required.
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Vertical Name</mat-label>
+        <input matInput formControlName="verticalName" required>
+        <mat-error
+          *ngIf="verticalForm.get('verticalName')?.hasError('required') && verticalForm.get('verticalName')?.touched">
+          Vertical Name is required
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Domain Name</mat-label>
+        <mat-select formControlName="domainName" required>
+          <mat-option *ngFor="let domain of (domains$ | async)" [value]="domain.domainName">
+            {{ domain.domainName }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="verticalForm.get('domainName')?.hasError('required') && verticalForm.get('domainName')?.touched">
+          Domain Name is required
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" [disabled]="verticalForm.invalid" (click)="onSave()">
+      {{ isEditMode ? 'Update' : 'Add' }} Vertical
+    </button>
+  </mat-dialog-actions>

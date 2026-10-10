@@ -1,0 +1,13 @@
+.cohort-card {
+	border-radius: 14px;
+	mat-card-content { padding: 16px 18px; }
+	.header {
+		display: flex; justify-content: space-between; align-items: flex-start;
+	}
+	.title { display:flex; align-items:center; gap:10px; }
+	.title h3 { margin: 0; font-size: 18px; font-weight: 600; }
+	.chips { margin-top: 8px; }
+	.meta { display:flex; gap:18px; margin: 14px 0; color: rgba(0,0,0,0.6); }
+	.meta .info { display:flex; align-items:center; gap:6px; }
+	.actions { display:flex; justify-content:flex-end; }
+}

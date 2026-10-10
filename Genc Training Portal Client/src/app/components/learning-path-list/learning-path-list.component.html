@@ -1,0 +1,30 @@
+<div class="learning-path-header d-flex justify-content-between align-items-center p-3">
+    <h2>All Learning Paths</h2>
+    <button mat-flat-button color="primary" (click)="openAddLearningPathDialog()">
+      <mat-icon>add</mat-icon> Add Learning Path
+    </button>
+  </div>
+ 
+  <div class="learning-path-grid p-3 d-flex flex-wrap gap-3">
+    <mat-card *ngFor="let path of learningPaths$ | async" class="learning-path-card">
+      <mat-card-header>
+        <mat-card-title>{{ path.serviceLineName }}</mat-card-title>
+        <mat-card-subtitle>{{ path.totalDurationWeeks }} Weeks</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Qualifier Day: {{ path.qualifierDay }} ({{ path.qualifierDate | date }})</p>
+        <p>Interim Day: {{ path.interimDay }} ({{ path.interimDate | date }})</p>
+        <p>Final Day: {{ path.finalDay }} ({{ path.finalDate | date }})</p>
+        <p>Total Working Days: {{ path.finalDay}}</p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button [routerLink]="['/course-detail', path.id]">View Details</button>
+        <button mat-button >Edit</button>
+        <button mat-button color="warn" (click)="deleteLearningPath(path.id)">Delete</button> </mat-card-actions>
+    </mat-card>
+ 
+    <p *ngIf="(learningPaths$ | async)?.length === 0" class="text-muted p-4">
+      No learning paths found. Add one!
+    </p>
+  </div>
+ 

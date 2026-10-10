@@ -1,0 +1,104 @@
+<mat-sidenav-container class="app-sidenav-container">
+    <mat-sidenav-content>
+        <div class="main-content-area">
+
+            <div class="filter-bar-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Filter by Role</mat-label>
+                    <mat-select [(ngModel)]="selectedRoleFilter" (selectionChange)="applyFilters()">
+                        <mat-option value="">All Roles</mat-option>
+                        <mat-option *ngFor="let role of rolesList" [value]="role">{{ role }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="people-page-header">
+                <div class="people-search-bar">
+                    <mat-form-field appearance="outline" class="people-search-input">
+                        <mat-icon matPrefix>search</mat-icon>
+                        <input matInput placeholder="Find person" [(ngModel)]="searchQuery" (keyup)="applyFilters()">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- Guest Banner -->
+            <div *ngIf="isReadOnly" class="guest-notice mb-3">
+                <mat-icon>visibility</mat-icon>
+                <span>You are in <strong>read-only mode</strong>. You cannot add, edit, or delete users.</span>
+            </div>
+
+            <div class="add-people-button-container">
+                <button *ngIf="!isReadOnly" mat-flat-button color="primary" (click)="addPeople()">
+                    <mat-icon>add</mat-icon> Add People
+                </button>
+            </div>
+
+            <div class="people-dashboard-content">
+                <div class="main-people-area">
+                    <div class="data-table-section">
+                        <div class="found-count">Found: {{ dataSource.filteredData.length }}</div>
+                        <div class="mat-elevation-z2">
+                            <table mat-table [dataSource]="dataSource" matSort>
+
+                                <ng-container matColumnDef="sno">
+                                    <th mat-header-cell *matHeaderCellDef> S.No. </th>
+                                    <td mat-cell *matCellDef="let element; let i = index;">
+                                        {{ (paginator.pageIndex * paginator.pageSize) + i + 1 }}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="id">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Dev ID </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="associateId">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.associateId}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="associateName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.associateName}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="associateEmail">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email ID </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.associateEmail}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="role">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <button *ngIf="!isReadOnly" mat-icon-button color="accent" (click)="onEdit(element)">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button *ngIf="!isReadOnly" mat-icon-button color="warn" (click)="onDelete(element)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                        <span *ngIf="isReadOnly" class="text-muted">View only</span>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                                <tr class="mat-row" *matNoDataRow>
+                                    <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the
+                                        filter "{{searchQuery}}"</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                            (page)="onPageChange($event)"></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

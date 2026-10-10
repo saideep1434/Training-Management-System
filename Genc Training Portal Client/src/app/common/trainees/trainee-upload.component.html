@@ -1,0 +1,82 @@
+<mat-card class="cardWithShadow m-b-20">
+  <mat-card-header class="d-flex justify-content-between align-items-center">
+    <mat-card-title>Upload Trainees (CSV)</mat-card-title>
+    <div class="d-flex gap-2 align-items-center">
+      <label class="d-flex align-items-center gap-1">
+        <input type="checkbox" [(ngModel)]="updateExisting" />
+        <span>Update existing</span>
+      </label>
+      <span *ngIf="savedAt" class="text-muted">Last saved: {{ savedAt }}</span>
+      <button mat-stroked-button color="primary" (click)="saveDraft()">Save</button>
+      <button mat-stroked-button color="warn" (click)="clearDraft()">Clear</button>
+      <button mat-stroked-button color="primary" (click)="goBack()">Back</button>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+  <input type="file" accept=".csv" (change)="onFile($event)" />
+    <div class="m-t-12" *ngIf="rows.length">
+      <p>Parsed {{ rows.length }} records. Review below, then upload.</p>
+      <table mat-table [dataSource]="rows" class="w-100">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let r">{{ r.traineeName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="associate">
+          <th mat-header-cell *matHeaderCellDef>Associate ID</th>
+          <td mat-cell *matCellDef="let r">{{ r.traineeAssociateId }}</td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let r">{{ r.traineeEmail }}</td>
+        </ng-container>
+        <ng-container matColumnDef="domain">
+          <th mat-header-cell *matHeaderCellDef>Domain</th>
+          <td mat-cell *matCellDef="let r">{{ r.domainName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="skills">
+          <th mat-header-cell *matHeaderCellDef>Skills</th>
+          <td mat-cell *matCellDef="let r">{{ r.skills }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayed"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayed"></tr>
+      </table>
+      <button mat-flat-button color="primary" class="m-t-12" (click)="upload()" [disabled]="uploading">Upload</button>
+    </div>
+    <div class="m-t-12" *ngIf="!rows.length">
+      <p>CSV headers required: traineeName, traineeAssociateId, traineeEmail, domainName, skills</p>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardWithShadow m-b-20" *ngIf="report && report.length">
+  <mat-card-header>
+    <mat-card-title>Upload Report</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="m-b-12">Only problematic rows are listed below (SKIPPED/FAILED) with reasons.</p>
+  <table mat-table [dataSource]="filteredReport" class="w-100">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let r">{{ r.index + 1 }}</td>
+      </ng-container>
+      <ng-container matColumnDef="associate">
+        <th mat-header-cell *matHeaderCellDef>Associate ID</th>
+        <td mat-cell *matCellDef="let r">{{ r.traineeAssociateId || '-' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let r">{{ r.traineeEmail || '-' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let r">{{ r.status }}</td>
+      </ng-container>
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef>Reason</th>
+        <td mat-cell *matCellDef="let r">{{ r.reason || '-' }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['index','associate','email','status','reason']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['index','associate','email','status','reason']"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

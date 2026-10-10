@@ -1,0 +1,63 @@
+<!-- src/app/domain/add-edit-domain-dialog/add-edit-domain-dialog.component.html -->
+<!-- 
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Domain' : 'Add New Domain' }}</h2>
+
+<mat-dialog-content [formGroup]="domainForm">
+    <mat-form-field appearance="outline">
+        <mat-label>Serial No</mat-label>
+        <input matInput formControlName="serialNo" type="number" required>
+        <mat-error
+            *ngIf="domainForm.get('serialNo')?.hasError('required') && domainForm.get('serialNo')?.touched">Serial No is
+            required</mat-error>
+        <mat-error *ngIf="domainForm.get('serialNo')?.hasError('min') && domainForm.get('serialNo')?.touched">Serial No
+            must be positive</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Domain ID</mat-label>
+        <input matInput formControlName="domainId" required>
+        <mat-error
+            *ngIf="domainForm.get('domainId')?.hasError('required') && domainForm.get('domainId')?.touched">Domain ID is
+            required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Domain Name</mat-label>
+        <input matInput formControlName="domainName" required>
+        <mat-error
+            *ngIf="domainForm.get('domainName')?.hasError('required') && domainForm.get('domainName')?.touched">Domain
+            Name is required</mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" [disabled]="domainForm.invalid" (click)="onSave()">
+        {{ isEditMode ? 'Update' : 'Add' }} Domain
+    </button>
+</mat-dialog-actions> -->
+
+<h2 mat-dialog-title>{{ dialogTitle }}</h2> <mat-dialog-content [formGroup]="domainForm">
+    <!-- <mat-form-field appearance="outline">
+        <mat-label>Domain ID</mat-label>
+        <input matInput formControlName="domainId" required [readonly]="isEditMode">
+        <mat-error
+            *ngIf="domainForm.get('domainId')?.hasError('required') && domainForm.get('domainId')?.touched">Domain ID is
+            required</mat-error>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="outline">
+        <mat-label>Domain Name</mat-label>
+        <input matInput formControlName="domainName" required>
+        <mat-error
+            *ngIf="domainForm.get('domainName')?.hasError('required') && domainForm.get('domainName')?.touched">Domain
+            Name is required</mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" [disabled]="domainForm.invalid" (click)="onSave()">
+        {{ isEditMode ? 'Update' : 'Add' }} Domain
+    </button>
+</mat-dialog-actions>

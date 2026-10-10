@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <!-- Guest Banner -->
+  <div *ngIf="isReadOnly" class="guest-notice mb-3">
+    <mat-icon>visibility</mat-icon>
+    <span>You are in <strong>read-only mode</strong>. You cannot create, edit, or delete learning paths.</span>
+  </div>
+
+  <div class="learning-path-header d-flex justify-content-between align-items-center p-2 pb-3">
+    <h2 class="m-0">All Learning Paths</h2>
+    <button *ngIf="canManageLearningPath && !isReadOnly" class="add-learning-path-btn" mat-flat-button color="primary" (click)="openAddLearningPathDialog()">
+      <mat-icon>add</mat-icon>
+      Add Learning Path
+    </button>
+  </div>
+
+  <div class="cards-display-container">
+    <div class="card-item-wrapper" *ngFor="let path of learningPaths$ | async">
+      <mat-card class="card-custom" (click)="viewLearningPathDetails(path.learningPathId)">
+        <a class="card-link" (click)="$event.preventDefault()">
+          <mat-card-content class="card-body">
+            <div class="card-header-top-row d-flex justify-content-between align-items-center">
+              <div class="card-count-badge">
+                <mat-icon>schedule</mat-icon>
+                {{ path.durationWeeks }} weeks
+              </div>
+              <button *ngIf="canManageLearningPath && !isReadOnly" mat-icon-button class="btn-dots" [matMenuTriggerFor]="cardMenu" (click)="$event.stopPropagation()">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </div>
+
+            <span class="card-title custom-title">{{ path.serviceLineName }}</span>
+
+            <div class="card-footer-bottom-row d-flex justify-content-between align-items-center">
+              <button *ngIf="canManageLearningPath && !isReadOnly" mat-stroked-button class="btn-qea" (click)="editLearningPath(path.learningPathId); $event.stopPropagation()">
+                Edit
+              </button>
+              <button mat-button color="primary" class="btn-view-details" (click)="viewLearningPathDetails(path.learningPathId); $event.stopPropagation()">
+                View Details
+              </button>
+            </div>
+          </mat-card-content>
+        </a>
+      </mat-card>
+
+      <mat-menu #cardMenu="matMenu">
+        <button *ngIf="canManageLearningPath && !isReadOnly" mat-menu-item (click)="editLearningPath(path.learningPathId)">
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button *ngIf="canManageLearningPath && !isReadOnly" mat-menu-item (click)="deleteLearningPath(path.learningPathId)">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </div>
+
+    <p *ngIf="(learningPaths$ | async)?.length === 0" class="text-muted p-4">
+      No learning paths found. Add one!
+    </p>
+  </div>
+</div>

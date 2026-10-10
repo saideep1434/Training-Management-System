@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Global snackbar styles for warning variant */
+.mat-mdc-snack-bar-container.snackbar-warning .mdc-snackbar__surface {
+  background-color: #ffecb3; /* light amber */
+}
+.mat-mdc-snack-bar-container.snackbar-warning .mdc-snackbar__label {
+  color: #5d4037; /* dark brown text for contrast */
+}
+.mat-mdc-snack-bar-container.snackbar-warning .mdc-button__label,
+.mat-mdc-snack-bar-container.snackbar-warning .mdc-button {
+  color: #5d4037;
+}
+
+/* Guest read-only mode notice banner (local component banners) */
+.guest-notice {
+  background: #fff3cd;
+  color: #856404;
+  padding: 12px 16px;
+  border-radius: 4px;
+  border-left: 4px solid #ffc107;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  mat-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+    color: #ffc107;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+/* Global guest banner at top of layout */
+.global-guest-banner {
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+  color: #ffffff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-size: 14px;
+
+  mat-icon {
+    font-size: 22px;
+    height: 22px;
+    width: 22px;
+    color: #ffffff;
+  }
+
+  strong {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 8px 12px;
+
+    mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+    }
+  }
+}

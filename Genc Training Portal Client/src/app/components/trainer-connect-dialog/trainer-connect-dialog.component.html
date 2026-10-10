@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Add Trainer Connect</h2>
+<mat-dialog-content>
+  <form [formGroup]="connectForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Contribution Hours</mat-label>
+      <input matInput type="number" formControlName="contributionHrs">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Topics</mat-label>
+      <input matInput formControlName="topics">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Mode of Training</mat-label>
+      <input matInput formControlName="modeOfTraining">
+    </mat-form-field>
+
+    <mat-checkbox formControlName="acknowledgement">Acknowledged</mat-checkbox>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSave()" [disabled]="!connectForm.valid">Save</button>
+</mat-dialog-actions>

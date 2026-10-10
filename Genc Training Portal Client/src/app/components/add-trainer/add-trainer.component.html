@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Add New Trainer</h2>
+<mat-dialog-content>
+    <form #trainerForm="ngForm">
+        <mat-form-field *ngFor="let inputElement of inputElements | keyvalue" appearance="outline">
+            <mat-label>{{inputElement.value[0]}}</mat-label>
+            <input
+            matInput
+            [type]="inputElement.value[1]"
+            [(ngModel)]="formData[inputElement.key]"
+            [name]="inputElement.key"
+            required
+            >
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="outline" class="w-100 mb-3">
+            <mat-label>Associate ID</mat-label>
+            <input matInput type="number" [(ngModel)]="newTrainer.techTrainerAssociateId" name="associateId" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="newTrainer.techTrainerName" name="name" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+            <mat-label>Description</mat-label>
+            <input matInput [(ngModel)]="newTrainer.description" name="description">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" [(ngModel)]="newTrainer.techTrainerEmail" name="email" required>
+        </mat-form-field> -->
+        <!-- <mat-form-field appearance="outline" class="w-100 mb-3">
+            <mat-label>Cohorts</mat-label>
+            <input matInput type="number" [(ngModel)]="newTrainer.cohorts" name="cohorts">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+            <mat-label>Status</mat-label>
+            <mat-select [(ngModel)]="newTrainer.status" name="status" required>
+                <mat-option value="free">Free</mat-option>
+                <mat-option value="assigned">Assigned</mat-option>
+            </mat-select>
+        </mat-form-field> -->
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" [disabled]="!trainerForm.valid" (click)="onSave()">Add Trainer</button>
+</mat-dialog-actions>

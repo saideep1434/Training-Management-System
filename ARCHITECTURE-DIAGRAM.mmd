@@ -1,0 +1,45 @@
+flowchart TD
+  subgraph Frontend [Angular Client]
+    direction TB
+    A[Login Page / Authentication UI] -->|POST /auth/login| B[AuthService]
+    B -->|store JWT| C[StorageService (localStorage)]
+    C --> D[AuthInterceptor]
+    D -->|Bearer JWT| E[API Request to Backend]
+    A1[AuthGuard] -->|protects routes| B1[Role-based route activation]
+    B1 -->|authorized | E
+    B1 -->|unauthorized| F[Redirect to /unauthorized or login]
+  end
+
+  subgraph Backend [Spring Boot Server]
+    direction TB
+    E --> G[SecurityConfig]
+    G --> H[JwtAuthenticationFilter]
+    H -->|extract + validate JWT| I[JwtTokenProvider]
+    I -->|verify signature / expiry| H
+    H -->|create Authentication| J[SecurityContext]
+    J -->|access decision| K[Controller / Service Layer]
+    K --> L[CustomUserDetailsService]
+    L --> M[register_associate table]
+  end
+
+  subgraph DataStore [Database]
+    direction TB
+    M
+  end
+
+  subgraph PublicEndpoints [Unauthenticated Endpoints]
+    direction TB
+    P1[/auth/**] -->|permitAll| G
+    P2[/swagger-ui/**] -->|permitAll| G
+  end
+
+  subgraph ProtectedAPIs [Authenticated APIs]
+    direction TB
+    P3[/api/**] -->|hasRole / hasAnyRole| G
+  end
+
+  C -. stores token .-> D
+  H -. checks Authorization header .-> D
+  B -->|navigates after login| B1
+  K -->|reads/writes| M
+  L --->|lookup user data| M

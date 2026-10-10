@@ -1,0 +1,153 @@
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+  color: $textPrimary;
+  font-size: 14px;
+  line-height: 1.334rem;
+  overflow-x: hidden;
+  background: var(--background);
+}
+
+html .mat-drawer-container {
+  background-color: var(--background);
+}
+
+.mainWrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  flex: 1;
+  height: 100%;
+}
+
+.pageWrapper {
+  padding: 24px;
+  min-height: calc(100vh - 70px);
+
+  margin: 0 auto;
+  &.maxWidth {
+    max-width: $boxedWidth;
+  }
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.shadow-none {
+  box-shadow: none !important;
+}
+
+.rounded {
+  border-radius: $border-radius !important;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.rounded-pill {
+  border-radius: 25px !important;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.table-responsive {
+  overflow-x: auto;
+
+  td,
+  mat-cell {
+    white-space: nowrap;
+    padding: 16px;
+  }
+}
+
+// Local layout utilities for cohorts toolbar
+.filters-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cohort-search {
+  min-width: 280px;
+  width: clamp(260px, 35vw, 420px);
+  // Reduce left padding inside the input to remove extra space before placeholder
+  .mat-mdc-form-field-infix {
+    padding-left: 8px !important;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  // Remove space reserved for floating label/notch for this field only
+  .mat-mdc-text-field-wrapper {
+    padding-left: 0 !important;
+  }
+  .mdc-notched-outline__leading {
+    width: 0 !important;
+  }
+
+  // Keep border color consistent (no black/blue highlight) and remove focus glow
+  .mat-mdc-form-field,
+  .mat-mdc-form-field:hover,
+  .mat-mdc-form-field.mat-focused {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__trailing,
+    .mdc-notched-outline__notch {
+      border-color: $borderColor !important;
+      transition: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.op-5 {
+  opacity: 0.5;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.avatar-group {
+  img {
+    border: 2px solid white;
+    margin-right: -5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.text-hover-primary:hover {
+  .hover-text {
+    color: $primary;
+  }
+}
+
+.filter-sidebar {
+  width: 290px;
+}

@@ -1,0 +1,225 @@
+/* Custom styles to match the image */
+ 
+/* Container for the whole component content */
+.container-fluid {
+    padding: 1rem;
+  }
+ 
+  /* Styles for the "Add Learning Path" button */
+  .add-learning-path-btn {
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+ 
+  .add-learning-path-btn:hover {
+    background-color: #0056b3;
+  }
+ 
+  .add-learning-path-btn i-tabler {
+    width: 20px;
+    height: 20px;
+  }
+ 
+  /* Flexbox container for the cards */
+  .cards-display-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+ 
+  /* Wrapper for each individual card item */
+  .card-item-wrapper {
+    flex: 0 0 calc(33.333% - 10.67px); /* 3 cards per row */
+    min-width: 280px;
+    box-sizing: border-box;
+  }
+ 
+  /* Responsive adjustments for the card-item-wrapper */
+  @media (max-width: 768px) {
+    .card-item-wrapper {
+      flex: 0 0 calc(50% - 8px); /* 2 cards per row */
+      min-width: 300px;
+    }
+  }
+ 
+  @media (max-width: 576px) {
+    .card-item-wrapper {
+      flex: 0 0 100%; /* 1 card per row */
+      max-width: none;
+    }
+  }
+ 
+  /* --- Card Styling --- */
+ 
+  .card-custom {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer; /* Indicates the entire card is clickable */
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+ 
+  .card-custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+ 
+  /* Ensure the `<a>` tag inside the card does not have an underline */
+  .card-custom .card-link {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Inherit text color */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allows the link to fill card height */
+  }
+ 
+  .card-custom .card-link:hover {
+    text-decoration: none; /* Ensures no underline on hover */
+  }
+ 
+ 
+  /* mat-card-content takes up all available space inside card */
+  mat-card-content.card-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+ 
+  /* Top section container for avatar, count, and dots */
+  .card-header-top-row {
+    margin-bottom: 0.5rem; /* Space below this row */
+    width: 100%; /* Ensure it spans full width */
+  }
+ 
+  .card-avatar-circle {
+    width: auto;
+    height: auto;
+    background: none;
+    border: none;
+    border-radius: 0;
+    margin-right: 0.5rem; /* Space between icon and other content if needed */
+  }
+ 
+  .avatar-icon {
+    width: 20px;
+    height: 20px;
+    color: #6c757d;
+  }
+ 
+  /* Styling for the count badge with icon */
+  .card-count-badge {
+    background-color: transparent;
+    color: #555;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0;
+    display: flex; /* Make it a flex container to align icon and text */
+    align-items: center; /* Vertically center icon and text */
+    gap: 4px; /* Small space between icon and text */
+  }
+ 
+  .card-count-badge mat-icon {
+    font-size: 18px; /* Adjust icon size */
+    height: 18px;
+    width: 18px;
+    color: #6c757d; /* Color for the icon */
+  }
+ 
+  /* Card title styling */
+  .card-title.custom-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.3;
+    margin-top: 0.5rem; /* Small top margin for spacing from top row */
+    margin-bottom: 0.5rem;
+    display: block;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+  }
+ 
+  /* QEA Button styling (now within card-footer-bottom-row) */
+  .btn-qea {
+    background-color: #4a6bff;
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+  }
+ 
+  .btn-qea:hover {
+    background-color: #3a50d4;
+    color: #fff;
+  }
+ 
+  /* Bottom section container (for line and both QEA and View Details buttons) */
+  .card-footer-bottom-row {
+    border-top: 1px solid #eee; /* The horizontal line */
+    padding-top: 1rem; /* Space above the buttons after the line */
+    margin-top: 1rem; /* Space between the title/spacer and this section */
+    width: 100%; /* Ensure border spans full width */
+  }
+ 
+  /* View Details Button styling */
+  .btn-view-details {
+    background-color: transparent;
+    color: #007bff;
+    border: none; /* Removed border */
+    font-weight: 600;
+    transition: color 0.3s ease; /* Transition only color as border is gone */
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+  }
+ 
+  .btn-view-details:hover {
+    background-color: transparent; /* Remains transparent */
+    color: #0056b3; /* Darker blue on hover */
+  }
+ 
+  /* Dots button styling */
+  .btn-dots {
+    color: #6c757d;
+    font-size: 1.2rem;
+    padding: 0;
+    min-width: 0;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+  }
+ 
+  .btn-dots:hover {
+    background-color: transparent;
+    color: #333;
+  }
+ 
+  /* General overrides/resets */
+  mat-card {
+    box-sizing: border-box;
+  }
+  mat-card .mat-card-header, mat-card .mat-card-content, mat-card .mat-card-actions {
+    padding: 0;
+  }

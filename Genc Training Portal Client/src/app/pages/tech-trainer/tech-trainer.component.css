@@ -1,0 +1,58 @@
+  /* General card styling */
+.card {
+  border-radius: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar specific styling */
+.sticky-sidebar {
+  position: sticky;
+  top: 20px;
+}
+
+.sticky-sidebar h5 {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.list-group-item {
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sticky-sidebar {
+    position: static;
+    margin-top: 20px;
+  }
+}
+
+
+.chart-wrapper {
+  max-width: 300px;
+  max-height: 300px;
+  margin: 0 auto;
+}
+
+.card.text-center h5 {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .chart-wrapper {
+    max-width: 100%;
+    height: auto;
+  }
+}

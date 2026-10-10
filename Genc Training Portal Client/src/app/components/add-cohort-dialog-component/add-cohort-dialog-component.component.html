@@ -1,0 +1,577 @@
+<!-- 
+<h2 mat-dialog-title>Add New Cohort</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="cohortForm">
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Cohort ID</mat-label>
+      <input matInput formControlName="id" required>
+      <mat-error *ngIf="cohortForm.get('id')?.hasError('required') && cohortForm.get('id')?.touched">
+        Cohort ID is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required>
+      <mat-error *ngIf="cohortForm.get('title')?.hasError('required') && cohortForm.get('title')?.touched">
+        Title is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Technology</mat-label>
+      <input matInput formControlName="technology" required>
+      <mat-error *ngIf="cohortForm.get('technology')?.hasError('required') && cohortForm.get('technology')?.touched">
+        Technology is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Tag</mat-label>
+      <input matInput formControlName="tag" required>
+      <mat-error *ngIf="cohortForm.get('tag')?.hasError('required') && cohortForm.get('tag')?.touched">
+        Tag is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Notifications</mat-label>
+      <input matInput type="number" formControlName="notifications" required>
+      <mat-error *ngIf="cohortForm.get('notifications')?.hasError('required') && cohortForm.get('notifications')?.touched">
+        Notifications is required.
+      </mat-error>
+      <mat-error *ngIf="cohortForm.get('notifications')?.hasError('min') && cohortForm.get('notifications')?.touched">
+        Notifications must be a positive number.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Filter By</mat-label>
+      <mat-select formControlName="filterBy" multiple>
+        <mat-option *ngFor="let option of filterByOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Vertical</mat-label>
+      <mat-select formControlName="vertical" multiple>
+        <mat-option *ngFor="let option of verticalOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Location</mat-label>
+      <mat-select formControlName="location" required>
+        <mat-option *ngFor="let option of locationOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('location')?.hasError('required') && cohortForm.get('location')?.touched">
+        Location is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" required>
+        <mat-option *ngFor="let option of statusOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('status')?.hasError('required') && cohortForm.get('status')?.touched">
+        Status is required.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="cohortForm.invalid">Add Cohort</button>
+</mat-dialog-actions> -->
+<!-- 
+<h2 mat-dialog-title>Add New Cohort</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="cohortForm">
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Cohort ID</mat-label>
+      <input matInput formControlName="id" required>
+      <mat-error *ngIf="cohortForm.get('id')?.hasError('required') && cohortForm.get('id')?.touched">
+        Cohort ID is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required>
+      <mat-error *ngIf="cohortForm.get('title')?.hasError('required') && cohortForm.get('title')?.touched">
+        Title is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Technology</mat-label>
+      <input matInput formControlName="technology" required>
+      <mat-error *ngIf="cohortForm.get('technology')?.hasError('required') && cohortForm.get('technology')?.touched">
+        Technology is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Tag</mat-label>
+      <input matInput formControlName="tag" required>
+      <mat-error *ngIf="cohortForm.get('tag')?.hasError('required') && cohortForm.get('tag')?.touched">
+        Tag is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Notifications</mat-label>
+      <input matInput type="number" formControlName="notifications" required min="0">
+      <mat-error *ngIf="cohortForm.get('notifications')?.hasError('required') && cohortForm.get('notifications')?.touched">
+        Notifications is required.
+      </mat-error>
+      <mat-error *ngIf="cohortForm.get('notifications')?.hasError('min') && cohortForm.get('notifications')?.touched">
+        Notifications must be a positive number.
+      </mat-error>
+    </mat-form-field>
+
+    New fields added below
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Tech Trainer</mat-label>
+      <input matInput formControlName="techTrainer" required>
+      <mat-error *ngIf="cohortForm.get('techTrainer')?.hasError('required') && cohortForm.get('techTrainer')?.touched">
+        Tech Trainer is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>BH Trainer</mat-label>
+      <input matInput formControlName="bhTrainer" required>
+      <mat-error *ngIf="cohortForm.get('bhTrainer')?.hasError('required') && cohortForm.get('bhTrainer')?.touched">
+        BH Trainer is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Batch Owner</mat-label>
+      <input matInput formControlName="batchOwner" required>
+      <mat-error *ngIf="cohortForm.get('batchOwner')?.hasError('required') && cohortForm.get('batchOwner')?.touched">
+        Batch Owner is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Cohort DOJ</mat-label>
+      <input matInput [matDatepicker]="cohortDojPicker" formControlName="cohort_doj" required>
+      <mat-datepicker-toggle matSuffix [for]="cohortDojPicker"></mat-datepicker-toggle>
+      <mat-datepicker #cohortDojPicker></mat-datepicker>
+      <mat-error *ngIf="cohortForm.get('cohort_doj')?.hasError('required') && cohortForm.get('cohort_doj')?.touched">
+        Cohort DOJ is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="startDatePicker" formControlName="start_date" required>
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+      <mat-error *ngIf="cohortForm.get('start_date')?.hasError('required') && cohortForm.get('start_date')?.touched">
+        Start Date is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="endDatePicker" formControlName="end_date" required>
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+      <mat-error *ngIf="cohortForm.get('end_date')?.hasError('required') && cohortForm.get('end_date')?.touched">
+        End Date is required.
+      </mat-error>
+    </mat-form-field> -->
+    <!-- End of new fields -->
+
+    <!-- <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Filter By</mat-label>
+      <mat-select formControlName="filterBy" multiple>
+        <mat-option *ngFor="let option of filterByOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Vertical</mat-label>
+      <mat-select formControlName="vertical" multiple>
+        <mat-option *ngFor="let option of verticalOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Location</mat-label>
+      <mat-select formControlName="location" required>
+        <mat-option *ngFor="let option of locationOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('location')?.hasError('required') && cohortForm.get('location')?.touched">
+        Location is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" required>
+        <mat-option *ngFor="let option of statusOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('status')?.hasError('required') && cohortForm.get('status')?.touched">
+        Status is required.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content> 
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="cohortForm.invalid">Add Cohort</button>
+</mat-dialog-actions> -->
+<!-- <h2 mat-dialog-title>Add New Cohort</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="cohortForm">
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Cohort ID</mat-label>
+      <input matInput formControlName="id" required>
+      <mat-error *ngIf="cohortForm.get('id')?.hasError('required') && cohortForm.get('id')?.touched">
+        Cohort ID is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required>
+      <mat-error *ngIf="cohortForm.get('title')?.hasError('required') && cohortForm.get('title')?.touched">
+        Title is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Technology</mat-label>
+      <input matInput formControlName="technology" required>
+      <mat-error *ngIf="cohortForm.get('technology')?.hasError('required') && cohortForm.get('technology')?.touched">
+        Technology is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Tag</mat-label>
+      <input matInput formControlName="tag" required>
+      <mat-error *ngIf="cohortForm.get('tag')?.hasError('required') && cohortForm.get('tag')?.touched">
+        Tag is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Notifications</mat-label>
+      <input matInput type="number" formControlName="notifications" required min="0">
+      <mat-error *ngIf="cohortForm.get('notifications')?.hasError('required') && cohortForm.get('notifications')?.touched">
+        Notifications is required.
+      </mat-error>
+      <mat-error *ngIf="cohortForm.get('notifications')?.hasError('min') && cohortForm.get('notifications')?.touched">
+        Notifications must be a positive number.
+      </mat-error>
+    </mat-form-field>
+
+     New fields added below 
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Tech Trainer</mat-label>
+      <input matInput formControlName="techTrainer" required>
+      <mat-error *ngIf="cohortForm.get('techTrainer')?.hasError('required') && cohortForm.get('techTrainer')?.touched">
+        Tech Trainer is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>BH Trainer</mat-label>
+      <input matInput formControlName="bhTrainer" required>
+      <mat-error *ngIf="cohortForm.get('bhTrainer')?.hasError('required') && cohortForm.get('bhTrainer')?.touched">
+        BH Trainer is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Batch Owner</mat-label>
+      <input matInput formControlName="batchOwner" required>
+      <mat-error *ngIf="cohortForm.get('batchOwner')?.hasError('required') && cohortForm.get('batchOwner')?.touched">
+        Batch Owner is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Cohort DOJ</mat-label>
+      <input matInput [matDatepicker]="cohortDojPicker" formControlName="cohort_doj" required>
+      <mat-datepicker-toggle matSuffix [for]="cohortDojPicker"></mat-datepicker-toggle>
+      <mat-datepicker #cohortDojPicker></mat-datepicker>
+      <mat-error *ngIf="cohortForm.get('cohort_doj')?.hasError('required') && cohortForm.get('cohort_doj')?.touched">
+        Cohort DOJ is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="startDatePicker" formControlName="start_date" required>
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+      <mat-error *ngIf="cohortForm.get('start_date')?.hasError('required') && cohortForm.get('start_date')?.touched">
+        Start Date is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="endDatePicker" formControlName="end_date" required>
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+      <mat-error *ngIf="cohortForm.get('end_date')?.hasError('required') && cohortForm.get('end_date')?.touched">
+        End Date is required.
+      </mat-error>
+    </mat-form-field>
+     End of new fields 
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Filter By</mat-label>
+      <mat-select formControlName="filterBy" multiple>
+        <mat-option *ngFor="let option of filterByOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Vertical</mat-label>
+      <mat-select formControlName="vertical" multiple>
+        <mat-option *ngFor="let option of verticalOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Location</mat-label>
+      <mat-select formControlName="location" required>
+        <mat-option *ngFor="let option of locationOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('location')?.hasError('required') && cohortForm.get('location')?.touched">
+        Location is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" required>
+        <mat-option *ngFor="let option of statusOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('status')?.hasError('required') && cohortForm.get('status')?.touched">
+        Status is required.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="cohortForm.invalid">Add Cohort</button>
+</mat-dialog-actions> --> 
+<h2 mat-dialog-title>Add New Cohort</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="cohortForm">
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Cohort ID</mat-label>
+      <input matInput formControlName="cohortId" required>
+      <mat-error *ngIf="cohortForm.get('id')?.hasError('required') && cohortForm.get('id')?.touched">
+        Cohort ID is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Cohort Code</mat-label>
+      <input matInput formControlName="cohortCode" required>
+      <mat-error *ngIf="cohortForm.get('cohortCode')?.hasError('required') && cohortForm.get('cohortId')?.touched">
+        Cohort Code is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Domain Name</mat-label>
+      <mat-select formControlName="domainName" required>
+        <mat-option *ngFor="let option of domainOptions" [value]="option.label">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('domainName')?.hasError('required') && cohortForm.get('cohortCode')?.touched">
+        Domain is required.
+      </mat-error>
+    </mat-form-field>
+
+
+    <!-- New fields for Cohort details -->
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Tech Trainer</mat-label>
+      <mat-select formControlName="technicalTrainerName" required>
+        <mat-option *ngFor="let option of techTrainerOptions" [value]="option.label">
+          {{option.label + "-" + option.value}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('technicalTrainerName')?.hasError('required') && cohortForm.get('technicalTrainerName')?.touched">
+        Tech Trainer is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>BH Trainer</mat-label>
+      <mat-select formControlName="bhTrainerName" required>
+        <mat-option *ngFor="let option of bhTrainerOptions" [value]="option.label">
+          {{option.label + "-" + option.value}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('bhTrainerName')?.hasError('required') && cohortForm.get('bhTrainerName')?.touched">
+        BH Trainer is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Coach</mat-label>
+      <mat-select formControlName="coachName" required>
+        <mat-option *ngFor="let option of coachOptions" [value]="option.label">
+          {{option.label + "-" + option.value}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('coachName')?.hasError('required') && cohortForm.get('coachName')?.touched">
+        coach is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Mentor</mat-label>
+      <mat-select formControlName="mentorName" required>
+        <mat-option *ngFor="let option of mentorOptions" [value]="option.label">
+          {{option.label + "-" + option.value}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('mentorName')?.hasError('required') && cohortForm.get('mentorName')?.touched">
+        Mentor is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Service Line</mat-label>
+      <mat-select formControlName="serviceLine">
+        <mat-option *ngFor="let option of serviceLinesOptions" [value]="option.trackName">
+          {{ option.domainName + " " + option.trackName}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('serviceLine')?.hasError('required') && cohortForm.get('serviceLine')?.touched">
+        Service line is mandatory
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Cohort DOJ</mat-label>
+      <input matInput [matDatepicker]="cohortDojPicker" formControlName="dateOfJoining" required>
+      <mat-datepicker-toggle matSuffix [for]="cohortDojPicker"></mat-datepicker-toggle>
+      <mat-datepicker #cohortDojPicker></mat-datepicker>
+      <mat-error *ngIf="cohortForm.get('dateOfJoining')?.hasError('required') && cohortForm.get('dateOfJoining')?.touched">
+        Cohort DOJ is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="startDatePicker" formControlName="trainingStartDate" required>
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+      <mat-error *ngIf="cohortForm.get('trainingStartDate')?.hasError('required') && cohortForm.get('trainingStartDate')?.touched">
+        Start Date is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="endDatePicker" formControlName="trainingEndDate" required>
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+      <mat-error *ngIf="cohortForm.get('trainingEndDate')?.hasError('required') && cohortForm.get('trainingEndDate')?.touched">
+        End Date is required.
+      </mat-error>
+    </mat-form-field>
+
+
+
+
+    
+    <!-- <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Filter By</mat-label>
+      <mat-select formControlName="filterBy" multiple>
+        <mat-option *ngFor="let option of filterByOptions" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Learning Path</mat-label>
+      <mat-select formControlName="learningPathId" required>
+        <mat-option *ngFor="let option of LearningPathOptions" [value]="option.learningPathId">
+          {{option.serviceLineName + " - " + option.durationWeeks + " weeks" }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Vertical</mat-label>
+      <mat-select formControlName="vertical" required>
+        <mat-option *ngFor="let option of verticalOptions" [value]="option.label">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Location</mat-label>
+      <mat-select formControlName="location" required>
+        <mat-option *ngFor="let option of locationOptions" [value]="option.label">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('location')?.hasError('required') && cohortForm.get('location')?.touched">
+        Location is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Hire Type</mat-label>
+      <mat-select formControlName="hireType" required>
+        <mat-option *ngFor="let option of hiretypesoptions" [value]="option.label">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="cohortForm.get('hireType')?.hasError('required') && cohortForm.get('hireType')?.touched">
+        Hire Type is required.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()" >Add Cohort</button>
+</mat-dialog-actions>
+

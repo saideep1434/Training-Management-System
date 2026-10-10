@@ -1,0 +1,133 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Learning Path' : 'Add New Learning Path' }}</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="addForm">
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Service Line Name</mat-label>
+      <mat-select formControlName="serviceLineName" required>
+        <mat-option *ngFor="let option of serviceLineOptions" [value]="option.trackName">
+          {{option.domainName + "-" + option.trackName}}
+        </mat-option>
+      </mat-select>
+      <!-- <input matInput formControlName="serviceLineName" required> -->
+      <mat-error *ngIf="addForm.get('serviceLineName')?.hasError('required') && addForm.get('serviceLineName')?.touched">
+        Service Line Name is required.
+      </mat-error>
+    </mat-form-field>
+ 
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Total Duration (Weeks)</mat-label>
+      <input matInput type="number" formControlName="totalDurationWeeks" min="1" required>
+      <mat-error *ngIf="addForm.get('totalDurationWeeks')?.hasError('required') && addForm.get('totalDurationWeeks')?.touched">
+        Total Duration (Weeks) is required.
+      </mat-error>
+      <mat-error *ngIf="addForm.get('totalDurationWeeks')?.hasError('min') && addForm.get('totalDurationWeeks')?.touched">
+        Please enter a positive number of weeks.
+      </mat-error>
+    </mat-form-field>
+ 
+    <h3 class="mt-4 mb-3">Milestone Dates:</h3>
+ 
+    <div class="d-flex w-100 mb-3 gap-3">
+      <!-- <mat-form-field appearance="outline" class="flex-grow-1">
+        <mat-label>Qualifier Date</mat-label>
+        <input matInput type="date" formControlName="qualifierDate" required>
+        <mat-error *ngIf="addForm.get('qualifierDate')?.hasError('required') && addForm.get('qualifierDate')?.touched">
+          Qualifier Date is required.
+        </mat-error>
+      </mat-form-field> -->
+      <mat-form-field appearance="outline" class="flex-grow-1">
+        <mat-label>Qualifier Day (e.g., 25)</mat-label>
+        <input matInput type="number" formControlName="qualifierDay" min="1" required> <mat-error *ngIf="addForm.get('qualifierDay')?.hasError('required') && addForm.get('qualifierDay')?.touched">
+          Qualifier Day is required.
+        </mat-error>
+        <mat-error *ngIf="addForm.get('qualifierDay')?.hasError('min') && addForm.get('qualifierDay')?.touched">
+          Please enter a positive day number.
+        </mat-error>
+      </mat-form-field>
+    </div>
+ 
+    <div class="d-flex w-100 mb-3 gap-3">
+      <!-- <mat-form-field appearance="outline" class="flex-grow-1">
+        <mat-label>Interim Date</mat-label>
+        <input matInput type="date" formControlName="interimDate" required>
+        <mat-error *ngIf="addForm.get('interimDate')?.hasError('required') && addForm.get('interimDate')?.touched">
+          Interim Date is required.
+        </mat-error>
+      </mat-form-field> -->
+      <mat-form-field appearance="outline" class="flex-grow-1">
+        <mat-label>Interim Day (e.g., 50)</mat-label>
+        <input matInput type="number" formControlName="interimDay" min="1" required> <mat-error *ngIf="addForm.get('interimDay')?.hasError('required') && addForm.get('interimDay')?.touched">
+          Interim Day is required.
+        </mat-error>
+        <mat-error *ngIf="addForm.get('interimDay')?.hasError('min') && addForm.get('interimDay')?.touched">
+          Please enter a positive day number.
+        </mat-error>
+      </mat-form-field>
+    </div>
+ 
+    <div class="d-flex w-100 mb-3 gap-3">
+      <!-- <mat-form-field appearance="outline" class="flex-grow-1">
+        <mat-label>Final Date</mat-label>
+        <input matInput type="date" formControlName="finalDate" required>
+        <mat-error *ngIf="addForm.get('finalDate')?.hasError('required') && addForm.get('finalDate')?.touched">
+          Final Date is required.
+        </mat-error>
+      </mat-form-field> -->
+      <mat-form-field appearance="outline" class="flex-grow-1">
+        <mat-label>Final Day (e.g., 90)</mat-label>
+        <input matInput type="number" formControlName="finalDay" min="1" required> <mat-error *ngIf="addForm.get('finalDay')?.hasError('required') && addForm.get('finalDay')?.touched">
+          Final Day is required.
+        </mat-error>
+        <mat-error *ngIf="addForm.get('finalDay')?.hasError('min') && addForm.get('finalDay')?.touched">
+          Please enter a positive day number.
+        </mat-error>
+      </mat-form-field>
+    </div>
+ 
+    <div formArrayName="dayDetails">
+      <h3 class="mt-4 mb-3">Daily Syllabus Entries:</h3>
+      <p *ngIf="dayDetails.length === 0 && addForm.get('totalDurationWeeks')?.value" class="text-muted">
+        No daily inputs generated. Please ensure "Total Duration (Weeks)" is a valid positive number.
+      </p>
+      <p *ngIf="!addForm.get('totalDurationWeeks')?.value" class="text-muted">
+        Enter the total duration in weeks to automatically generate daily syllabus inputs.
+      </p>
+ 
+      @for(dayControl of dayDetails.controls; track $index) {
+        <div [formGroup]="getFormGroup(dayControl)" class="mb-3 p-3 border rounded">
+          <h4>Day {{ $index + 1 }}</h4>
+          <mat-form-field appearance="outline" class="w-100 mb-2">
+            <mat-label>Day Number</mat-label>
+            <input matInput type="number" formControlName="dayNumber" required readonly>
+            <mat-error *ngIf="getFormGroup(dayControl).get('dayNumber')?.hasError('required') && getFormGroup(dayControl).get('dayNumber')?.touched">
+              Day Number is required.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 mb-2">
+            <mat-label>Topic</mat-label>
+            <input matInput formControlName="topic" required>
+            <mat-error *ngIf="getFormGroup(dayControl).get('topic')?.hasError('required') && getFormGroup(dayControl).get('topic')?.touched">
+              Topic is required for Day {{ $index + 1 }}.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" required rows="3"></textarea>
+            <mat-error *ngIf="getFormGroup(dayControl).get('description')?.hasError('required') && getFormGroup(dayControl).get('description')?.touched">
+              Description is required for Day {{ $index + 1 }}.
+            </mat-error>
+          </mat-form-field>
+          <button mat-icon-button (click)="removeDayDetail($index)" color="warn" aria-label="Remove day detail">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSave()" [disabled]="addForm.invalid">
+    {{ isEditMode ? 'Save Changes' : 'Add Learning Path' }}
+  </button>
+</mat-dialog-actions>
